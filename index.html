@@ -1,0 +1,43 @@
+<!DOCTYPE HMTL>
+<html>
+
+<head>
+    <title>LinTO - Synapse multi-bot</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Linagora" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="language" content="fr-FR" />
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.min.css" />
+</head>
+
+<body>
+    <div id="app" class="flex col">
+        <div class="flex1 flex col">
+            <h1 class="flex">Vocalisation du chatbot Synapse avec LinTO</h1>
+            <div class="flex col flex1" id="chat-wrapper">
+                <div class="flex row chat-header">
+                    <span class="chat-header--icon"></span>
+                    <span class="chat-header--label">Vocal chatbot</span>
+                </div>
+                <div class="flex1 flex col chat-body">
+                    <div class="flex row chat-item bot">
+                        <span class="chat-item--icon chat-item--icon__bot"></span>
+                        <p>Bonjour ! Je suis disponible 7j/7 et 24h/24 pour répondre à vos questions, que voulez-vous savoir ?</p>
+                    </div>
+                    <div class="flex row chat-item user">
+                        <p>Je souhaiterai contacter le service technique.</p>
+                        <span class="chat-item--icon chat-item--icon__user"></span>
+                    </div>
+                </div>
+                <div class="flex row chat-footer">
+                    <span class="chat-footer--record-state muted"></span>
+                    <input type="text" class="flex1 chat-footer--record-content" />
+                    <button class="chat-footer--send-btn"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
