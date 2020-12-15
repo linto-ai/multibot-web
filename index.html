@@ -7,8 +7,13 @@
     <meta name="author" content="Linagora" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="language" content="fr-FR" />
+    <link rel="shortcut icon" type="image/ico" href="/assets/img/favicon/favicon.ico" />
+    <link rel="shortcut icon" type="image/png" href="/assets/img/favicon/favicon-32x32.png" />
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="/assets/css/styles.min.css" />
+    <!-- SCRIPTS -->
+    <script type="text/javascript" src="/assets/js/linto.min.js"></script>
+    <script src="/assets/js/main.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -20,20 +25,20 @@
                     <span class="chat-header--icon"></span>
                     <span class="chat-header--label">Vocal chatbot</span>
                 </div>
-                <div class="flex1 flex col chat-body">
-                    <div class="flex row chat-item bot">
-                        <span class="chat-item--icon chat-item--icon__bot"></span>
-                        <p>Bonjour ! Je suis disponible 7j/7 et 24h/24 pour répondre à vos questions, que voulez-vous savoir ?</p>
-                    </div>
-                    <div class="flex row chat-item user">
-                        <p>Je souhaiterai contacter le service technique.</p>
-                        <span class="chat-item--icon chat-item--icon__user"></span>
+                <div class="flex1 flex col chat-body" id="chat-area">
+                    <div id="chat-content">
+                        <div class="flex row chat-item bot">
+                            <span class="chat-item--icon chat-item--icon__bot"></span>
+                            <div class="chat-item--content">Bonjour ! Je suis disponible 7j/7 et 24h/24 pour répondre à vos questions, que voulez-vous savoir ?</div>
+                        </div>
                     </div>
                 </div>
                 <div class="flex row chat-footer">
-                    <span class="chat-footer--record-state muted"></span>
-                    <input type="text" class="flex1 chat-footer--record-content" />
-                    <button class="chat-footer--send-btn"></button>
+                    <span id="microphone" class="chat-footer--record-state muted"></span>
+                    <!-- 
+                      <input type="text" class="flex1 chat-footer--record-content" />
+                      <button class="chat-footer--send-btn"></button> 
+                    -->
                 </div>
             </div>
         </div>
