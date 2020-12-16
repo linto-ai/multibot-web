@@ -61,8 +61,7 @@ window.onload = async function() {
     }
 
     let sayFeedback = async function(event) {
-        console.log(event)
-            //console.log("Saying : ", event.detail.behavior.say.text, " ---> Answer to : ", event.detail.transcript)
+        //console.log("Saying : ", event.detail.behavior.say.text, " ---> Answer to : ", event.detail.transcript)
         addChatItem('bot', event.detail.behavior.say.text)
         window.MicState.classList.remove('searching')
         window.MicState.classList.remove('on')
@@ -141,7 +140,9 @@ window.onload = async function() {
           <span class="chat-item--icon chat-item--icon__user"></span></div></div>`
         }
         chatContent.innerHTML += newContent
-        chatArea.scrollTo(0, chatContent.offsetHeight)
+        setTimeout(() => {
+            chatArea.scrollTo(0, chatContent.offsetHeight)
+        }, 300)
     }
 
     let addChatItemForm = async function(obj) {
@@ -161,7 +162,9 @@ window.onload = async function() {
         newContent += '</div></div></div>'
         chatContent.innerHTML += newContent
 
-        chatArea.scrollTo(0, chatContent.offsetHeight)
+        setTimeout(() => {
+            chatArea.scrollTo(0, chatContent.offsetHeight)
+        }, 300)
         await bindFormBtns()
     }
 
