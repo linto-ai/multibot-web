@@ -61,8 +61,9 @@ window.onload = async function() {
     }
 
     let sayFeedback = async function(event) {
-        // console.log("Saying : ", event.detail.behavior.say.text, " ---> Answer to : ", event.detail.transcript)
-
+        console.log(event)
+            //console.log("Saying : ", event.detail.behavior.say.text, " ---> Answer to : ", event.detail.transcript)
+        addChatItem('bot', event.detail.behavior.say.text)
         window.MicState.classList.remove('searching')
         window.MicState.classList.remove('on')
         window.MicState.classList.add('muted')
@@ -78,25 +79,27 @@ window.onload = async function() {
         await linto.ask(linto.lang, event.detail.behavior.ask.text)
     }
 
-    let streamingChunk = function(event) {
-        if (event.detail.behavior.streaming.partial) {
-            console.log("Streaming chunk received : ", event.detail.behavior.streaming.partial)
+    /*
+        let streamingChunk = function(event) {
+            if (event.detail.behavior.streaming.partial) {
+                console.log("Streaming chunk received : ", event.detail.behavior.streaming.partial)
+            }
+            if (event.detail.behavior.streaming.text) {
+                console.log("Streaming utterance completed : ", event.detail.behavior.streaming.text)
+            }
         }
-        if (event.detail.behavior.streaming.text) {
-            console.log("Streaming utterance completed : ", event.detail.behavior.streaming.text)
+
+        let streamingStart = function(event) {
+            console.log("Streaming started with no errors")
         }
-    }
 
-    let streamingStart = function(event) {
-        console.log("Streaming started with no errors")
-    }
-
-    let streamingFinal = function(event) {
-        console.log("Streaming ended, here's the final transcript : ", event.detail.behavior.streaming.result)
-    }
-    let streamingFail = function(event) {
-        console.log("Streaming cannot start : ", event.detail)
-    }
+        let streamingFinal = function(event) {
+            console.log("Streaming ended, here's the final transcript : ", event.detail.behavior.streaming.result)
+        }
+        let streamingFail = function(event) {
+            console.log("Streaming cannot start : ", event.detail)
+        }
+      */
 
     let customHandler = async function(event) {
         //console.log(`${event.detail.behavior.customAction.kind} fired`)
@@ -140,7 +143,8 @@ window.onload = async function() {
         chatContent.innerHTML += newContent
         chatArea.scrollTo(0, chatContent.offsetHeight)
     }
-    let addChatItemForm = function(obj) {
+
+    let addChatItemForm = async function(obj) {
         const chatArea = document.getElementById('chat-area')
         const chatContent = document.getElementById('chat-content')
         let newContent = `
@@ -151,12 +155,31 @@ window.onload = async function() {
             <div class="chat-item--form-btns flex row">`
         if (obj.data.label.length > 0) {
             for (let i = 0; i < obj.data.label.length; i++) {
-                newContent += `<button class="chat-item--form-btn">${obj.data.label[i]}</button>`
+                newContent += `<button class="chat-item--form-btn" >${obj.data.label[i]}</button>`
             }
         }
         newContent += '</div></div></div>'
         chatContent.innerHTML += newContent
+
         chatArea.scrollTo(0, chatContent.offsetHeight)
+        await bindFormBtns()
+    }
+
+    let bindFormBtns = async function() {
+        const btn = document.getElementsByClassName('chat-item--form-btn')
+        for (let i = 0; i < btn.length; i++) {
+            btn[i].onclick = async function(e) {
+                try {
+                    await linto.mqtt.publish("nlp/file/m7rendgc", {
+                        conversationData: {
+                            form: btn[i].innerHTML
+                        }
+                    })
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+        }
     }
 
     window.start = async function() {
@@ -180,15 +203,21 @@ window.onload = async function() {
             linto.addEventListener("hotword_on", hotword)
             linto.addEventListener("say_feedback_from_skill", sayFeedback)
             linto.addEventListener("ask_feedback_from_skill", askFeedback)
-                /*linto.addEventListener("streaming_start", streamingStart)
-                linto.addEventListener("streaming_chunk", streamingChunk)
-                linto.addEventListener("streaming_final", streamingFinal)
-                linto.addEventListener("streaming_fail", streamingFail)*/
+
+            /*
+              linto.addEventListener("streaming_start", streamingStart)
+              linto.addEventListener("streaming_chunk", streamingChunk)
+              linto.addEventListener("streaming_final", streamingFinal)
+              linto.addEventListener("streaming_fail", streamingFail)
+            */
+
             linto.addEventListener("custom_action_from_skill", customHandler)
 
             await linto.login()
             linto.startAudioAcquisition(true, "linto", 0.99) // Uses hotword built in WebVoiceSDK by name / model / threshold (0.99 is fine enough)
             linto.startCommandPipeline()
+
+
 
             return true
         } catch (e) {
