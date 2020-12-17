@@ -119,7 +119,7 @@ window.onload = async function() {
             if ((kind === 'html' || kind === 'html_base64') && !!event.detail.behavior.data.html) {
                 addChatItem('bot', event.detail.behavior.data.html)
             }
-            if (kind === 'html_form' && !!event.detail.behavior.data.question && !!event.detail.behavior.data.label) {
+            if (kind === 'html_form' && !!event.detail.behavior.data.question && !!event.detail.behavior.data.question) {
                 addChatItemForm(event.detail.behavior)
             }
             window.MicState.classList.remove('searching')
@@ -154,9 +154,9 @@ window.onload = async function() {
           <div class="chat-item--content">
             <span class="chat-item--form-question">${obj.data.question} :</span>
             <div class="chat-item--form-btns flex row">`
-        if (obj.data.label.length > 0) {
-            for (let i = 0; i < obj.data.label.length; i++) {
-                newContent += `<button class="chat-item--form-btn" >${obj.data.label[i]}</button>`
+        if (obj.data.button.length > 0) {
+            for (let i = 0; i < obj.data.button.length; i++) {
+                newContent += `<button class="chat-item--form-btn" data-val="${obj.data.button[i].value}">${obj.data.button[i].text}</button>`
             }
         }
         newContent += '</div></div></div>'
@@ -175,7 +175,7 @@ window.onload = async function() {
                 try {
                     await linto.mqtt.publish("nlp/file/m7rendgc", {
                         conversationData: {
-                            form: btn[i].innerHTML
+                            form: btn[i].getAttribute('data-val')
                         }
                     })
                 } catch (error) {
