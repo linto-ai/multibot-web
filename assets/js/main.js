@@ -190,7 +190,7 @@ window.onload = async function() {
             if (!!window.location.host && window.location.host === 'dev.linto.local:9001') { // LOCAL 
                 window.linto = new Linto("https://stage.linto.ai/overwatch/local/web/login", "NkYSkwWQks1oQjmp", 10000)
             } else { // PROD
-                window.linto = new Linto("https://stage.linto.ai/overwatch/local/web/login", "PwRfukzKLVxUe2NV", 10000)
+                window.linto = new Linto("https://stage.linto.ai/overwatch/local/web/login", "77y6GJdue5CcOrDd", 10000)
             }
 
             // Some feedbacks for UX implementation
